@@ -1,0 +1,31 @@
+name: xsdk-ci
+
+# Controls when the action will run. Triggers the workflow manually and on push / pull 
+# request events for the xsdk branches
+on: 
+  workflow_dispatch:
+#   push:
+#     branches: $default-branch
+#   pull_request:
+#     branches: $default-branch
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  osx-clang:
+    runs-on: ${{ matrix.os }}
+    continue-on-error: true
+    strategy:
+      matrix:
+        os: [macOS]
+        compiler: [clang@10.0.1-apple]
+        # options: [ ]
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+        with:
+          repository: vreshniak/spack-xsdk-copy
+      # - uses: ./.github/actions/build-xsdk
+      - uses: vreshniak/misc@v2
+        with:
+          cmd: 'python3 ./bin/spack install xsdk%${{ matrix.compiler }} ^arpack-ng fflags=-fallow-argument-mismatch' 
