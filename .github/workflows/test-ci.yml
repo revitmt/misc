@@ -13,7 +13,7 @@ on:
 jobs:
   osx-clang:
     runs-on: ${{ matrix.os }}
-    continue-on-error: false
+    continue-on-error: true
     strategy:
       matrix:
         os: [macOS]
@@ -25,7 +25,6 @@ jobs:
       - uses: actions/checkout@v2
         with:
           repository: vreshniak/spack-xsdk-copy
-      # - uses: ./.github/actions/build-xsdk
       - uses: vreshniak/misc@v2
         with:
           cmd: 'python3 ./bin/spack install xsdk%${{ matrix.compiler }} ^arpack-ng fflags=-fallow-argument-mismatch' 
