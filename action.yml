@@ -8,10 +8,6 @@ inputs:
 runs:
   using: "composite"
   steps: 
-    - uses: actions/checkout@v2
-      with:
-        repository: vreshniak/spack-xsdk-copy
-    
     # Runs a set of commands before main scripts using the runners shell
     - name: before_script 
       run: |
